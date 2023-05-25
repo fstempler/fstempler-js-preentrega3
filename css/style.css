@@ -1,0 +1,86 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Varela Round', sans-serif;
+    color: aquamarine;
+}
+
+body {
+    background-color: #322e3f;
+}
+
+nav{
+    margin: 10px
+}
+
+.whiteText{
+    color: #ffffff;
+}
+
+.form1{
+    background-color: black;
+
+}
+
+.boton{
+    color: #ffffff;
+    border-style: solid;
+    border-color: aquamarine;
+    border-width: 2px;
+    border-radius: 8px;
+    width: auto;
+    padding: 15px;
+    background-color: rgba(127, 255, 212, 0);
+}
+
+.boton:hover{
+    background-color: aquamarine;
+    color: #322e3f;
+    
+}
+
+.btn1{
+    margin: 15px 0 15px 0;
+}
+
+.transpBg{
+    margin: 45px;
+    background: rgba(255, 255, 255, 0.13);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.form1{
+    padding: 15px;
+}
+
+.viewmode{
+    width: 70px;
+    height: 70px;
+    color: #ffffff;
+    border-style: solid;
+    border-color: aquamarine;
+    border-width: 1px;
+    border-radius: 50%;
+    width: auto;
+    padding: 15px;
+    background-color: rgba(127, 255, 212, 0);
+}    
+.viewMode:hover{
+        background-color: #ffffff;
+        color: #322e3f;
+        border: none;
+        
+      }
+
+.mode{
+        height: 110px;
+        width: 110px;
+        position: fixed;
+        top: 40px;
+        right: 20px;
+        
+      }  
