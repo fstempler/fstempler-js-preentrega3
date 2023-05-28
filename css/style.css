@@ -84,3 +84,15 @@ nav{
         right: 20px;
         
       }  
+.disable{
+    display: none !important;
+}
+ol{
+    padding:15px;
+    list-style-type: none;
+    margin-bottom: 0;
+}
+
+.randomRecommended{
+    padding:15px;
+}
