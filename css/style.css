@@ -3,12 +3,14 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Varela Round', sans-serif;
-    color: aquamarine;
 }
 
 body {
     background-color: #322e3f;
+    color: aquamarine;
 }
+
+
 
 nav{
     margin: 10px
@@ -18,10 +20,7 @@ nav{
     color: #ffffff;
 }
 
-.form1{
-    background-color: black;
 
-}
 
 .boton{
     color: #ffffff;
@@ -57,20 +56,14 @@ nav{
     padding: 15px;
 }
 
-.viewmode{
-    width: 70px;
-    height: 70px;
+.viewMode{
+    width: 30px;
+    height: 30px;
     color: #ffffff;
-    border-style: solid;
-    border-color: aquamarine;
-    border-width: 1px;
-    border-radius: 50%;
     width: auto;
-    padding: 15px;
     background-color: rgba(127, 255, 212, 0);
 }    
 .viewMode:hover{
-        background-color: #ffffff;
         color: #322e3f;
         border: none;
         
@@ -96,3 +89,10 @@ ol{
 .randomRecommended{
     padding:15px;
 }
+
+
+.light{
+    background-color: #a8a5a5;
+    color: #322e3f;
+}
+

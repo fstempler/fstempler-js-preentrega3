@@ -1,7 +1,8 @@
 
 let userArr = [];
-let trueOFalse = true;
 
+
+const toggle = document.getElementById('viewMode');
 const formUser = document.querySelector("#formUser");
 const inputName = document.querySelector("#inputName");
 const inputEmail = document.querySelector("#inputEmail");
@@ -12,6 +13,7 @@ const artist2 = document.querySelector("#favoriteArtist2");
 const record2 = document.querySelector("#favoriteRecord2");
 const recommendRecord = document.querySelector("#recommendRecord");
 const recommendedRecord = document.querySelector("#recommendedRecord");
+const goBackBtn3 = document.querySelector("#goBackBtn3");
 const goBackBtn = document.querySelector("#goBackBtn");
 const backBtn = document.querySelector("#backBtn");
 const favoritesList = document.querySelector("#favoritesList");
@@ -30,6 +32,7 @@ const changeRecords = document.querySelector("#changeRecords");
 const changeAllRecords = document.querySelector("#changeAllRecords");
 const showRecord1 = document.querySelector("#showRecord1");
 const showRecord2 = document.querySelector("#showRecord2");
+const recordTitle = document.querySelector("#recordTitle");
 const insertNewRecord1 = document.querySelector("#insertNewRecord1");
 const insertNewRecord2 = document.querySelector("#insertNewRecord2");
 const replaceRecord1 = document.querySelector("#replaceRecord1");
@@ -39,10 +42,31 @@ const recommendRandom = document.querySelector("#recommendRandom");
 const recommendedRandom = document.querySelector("#recommendedRandom");
 const clearData = document.querySelector("#clearData");
 const exit = document.querySelector("#exit");
-// const goBackBtn2 = document.querySelector("#goBackBtn2");
 
 
-//Acá creamos el objeto user
+//Modificación del view mode
+const savedViewMode = localStorage.getItem('viewMode'); //Obtiene el valor de viewMode del local storage
+if (savedViewMode) {
+  document.body.classList.add(savedViewMode);//Verifica el valor guardado de viewMode y lo agrega a la class del body
+}
+toggle.addEventListener('click', () => {
+  document.body.classList.toggle('light'); //Ejecuta el botón para modificar el viewMode
+  const currentViewMode = document.body.classList.contains('light') ? 'light' : 'dark';//verifica y establece el viewMode de light a dark o viceversa
+  localStorage.setItem('viewMode', currentViewMode);//Guarda en el localStorage el último viewMode elegido
+});
+
+//Chequea si hay un array guardado en el localStorage, Si lo hay comienza la app desde el menú de acciones. 
+const savedUser = localStorage.getItem('userArr');
+userArr = savedUser ? JSON.parse(savedUser) : [];
+
+if (userArr.length > 0) {
+  userInput.classList.add('disable');
+  userActions();
+} else {
+  userInput.classList.remove('disable');
+}
+
+//Crea el objeto user
 
   formUser.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -75,12 +99,13 @@ function createUser(user){
   userArr.push(user);
   userInput.classList.add('disable');
   localStorage.setItem('userArr', JSON.stringify(userArr));
+  actions.classList.remove('disable');
   userActions();
 }
 
 
 function userActions(){
-  actions.classList.remove('disable')
+  actions.classList.remove('disable');
 }
 
 
@@ -115,8 +140,8 @@ function jazzRecord() {
     if (user.artist1 == "Miles Davis" && user.record1 == "Kind of Blue"){
       recommendedRecordSection.innerHTML = `    
       <div class="mx-auto col-10 col-md-8 col-lg-6 transpBg">
-          <h1 class="title" id="recordTitle">John Coltrane - A Love Supreme</h1>
-          <p class="text" id="recordText">
+          <h1 class="title lightModeText">John Coltrane - A Love Supreme</h1>
+          <p class="text lightModeText>
           "A Love Supreme" is a seminal jazz album by the influential American saxophonist and composer, John Coltrane. Released in 1965, it is widely regarded as one of the most significant and spiritually profound recordings in the history of jazz. "A Love Supreme" showcases Coltrane's deep musical and spiritual exploration, marking a pivotal point in his artistic evolution.
 
 The album is structured as a four-part suite, with each section representing a different aspect of Coltrane's personal journey towards spiritual enlightenment. It combines elements of modal jazz, hard bop, and free jazz, pushing the boundaries of improvisation and expanding the possibilities of the genre.
@@ -131,13 +156,13 @@ The album's themes of spirituality, love, and redemption are reflected in Coltra
           </p>
           <iframe style="border-radius:12px" src="https://open.spotify.com/embed/album/1weenld61qoidwYuZ1GESA?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
           <div>
-              <button class="boton btn1" id="newRecord">Recommend NEW record</button>
-          </div>
+                <button type="button" class="boton btn1" id="goBackBtn3">Go Back</button>
+            </div>
           `;
     }else{recommendedRecordSection.innerHTML = `    
     <div class="mx-auto col-10 col-md-8 col-lg-6 transpBg">
-        <h1 class="title" id="recordTitle">Miles Davis - Kind Of Blue</h1>
-        <p class="text" id="recordText">
+        <h1 class="title lightModeText" >Miles Davis - Kind Of Blue</h1>
+        <p class="text lightModeText">
         Kind of Blue is a landmark jazz album by the legendary American trumpeter and composer, Miles Davis. Released in 1959, it is widely regarded as one of the most influential and iconic albums in the history of jazz. Kind of Blue is known for its groundbreaking approach to improvisation, modal jazz, and its serene, introspective mood.
 
         The album features an exceptional ensemble of musicians, including Miles Davis on trumpet, John Coltrane and Julian "Cannonball" Adderley on saxophones, Bill Evans and Wynton Kelly on piano, Paul Chambers on bass, and Jimmy Cobb on drums. Each musician brings their unique style and virtuosity to the record, creating a rich and cohesive sound.
@@ -150,11 +175,17 @@ The album's themes of spirituality, love, and redemption are reflected in Coltra
         </p>
         <iframe style="border-radius:12px" src="https://open.spotify.com/embed/album/1weenld61qoidwYuZ1GESA?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
         <div>
-            <button class="boton btn1" id="newRecord">Recommend NEW record</button>
-        </div>
+                <button type="button" class="boton btn1" id="goBackBtn3">Go Back</button>
+            </div>
         `;
       }
   });
+  const goBackBtn3 = document.getElementById('goBackBtn3');
+          goBackBtn3.addEventListener('click', (event) => {
+            actions.classList.remove('disable');
+            recommendedRecordSection.classList.add('disable');
+          });
+  
   }
 
 
@@ -165,8 +196,8 @@ function rockRecord() {
     if (user.artist1 == "The Police" && user.record1 == "Synchronicity"){
       recommendedRecordSection.innerHTML = `    
       <div class="mx-auto col-10 col-md-8 col-lg-6 transpBg">
-          <h1 class="title" id="recordTitle">Audioslave - Out of Exile</h1>
-          <p class="text" id="recordText">
+          <h1 class="title lightModeText" >Audioslave - Out of Exile</h1>
+          <p class="text lightModeText">
           "Out of Exile" is the second studio album by the American rock band Audioslave, released in 2005. It showcases the band's signature blend of hard rock, alternative rock, and grunge, combining powerful guitar riffs, soulful vocals, and introspective lyrics. "Out of Exile" builds upon the success of their self-titled debut album and further establishes Audioslave as a formidable force in the rock music scene.
 
 The album features the distinctive vocals of Chris Cornell, formerly of Soundgarden, and the instrumental prowess of the instrumentalists from Rage Against the Machine—Tom Morello on guitar, Tim Commerford on bass, and Brad Wilk on drums. The band's chemistry and tight musicianship are evident throughout the record, creating a dynamic and powerful sound.
@@ -181,13 +212,13 @@ The production on "Out of Exile" is polished and refined, highlighting the band'
           </p>
           <iframe style="border-radius:12px" src="https://open.spotify.com/embed/album/0HQhToIjonHnJRRPN4jeJU?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
           <div>
-              <button class="boton btn1" id="newRecord">Recommend NEW record</button>
-          </div>
+                <button type="button" class="boton btn1" id="goBackBtn3">Go Back</button>
+            </div>
           `;
     }else{recommendedRecordSection.innerHTML = `    
     <div class="mx-auto col-10 col-md-8 col-lg-6 transpBg">
-        <h1 class="title" id="recordTitle">The Police - Synchronicity</h1>
-        <p class="text" id="recordText">
+        <h1 class="title lightModeText" >The Police - Synchronicity</h1>
+        <p class="text lightModeText">
         "Synchronicity" is the fifth and final studio album by the British rock band The Police, released in 1983. It is a captivating blend of new wave, reggae, and pop-rock, showcasing the band's unique sound and remarkable musicianship. "Synchronicity" propelled The Police to even greater heights of success and became one of their most popular and critically acclaimed albums.
 
 The album features the distinctive vocals and songwriting of Sting, accompanied by the masterful musicianship of Andy Summers on guitar and Stewart Copeland on drums. The band's tight-knit chemistry is evident throughout the record, as they seamlessly fuse together different genres and musical influences.
@@ -202,12 +233,18 @@ With its combination of commercial success and critical acclaim, "Synchronicity"
         </p>
         <iframe style="border-radius:12px" src="https://open.spotify.com/embed/album/5W9OT0a5iZlBr83a9WMKFY?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
         <div>
-            <button class="boton btn1" id="newRecord">Recommend NEW record</button>
-        </div>
+                <button type="button" class="boton btn1" id="goBackBtn3">Go Back</button>
+            </div>
         `;
       }
   });
-}
+  const goBackBtn3 = document.getElementById('goBackBtn3');
+          goBackBtn3.addEventListener('click', (event) => {
+            actions.classList.remove('disable');
+            recommendedRecordSection.classList.add('disable');
+          });
+  
+  }
 
 
 //Función que recomienda si genre es Pop.
@@ -217,8 +254,8 @@ function popRecord() {
     if (user.artist1 == "Michael Jackson" && user.record1 == "Dangerous"){
       recommendedRecordSection.innerHTML = `    
       <div class="mx-auto col-10 col-md-8 col-lg-6 transpBg">
-          <h1 class="title" id="recordTitle">Hall and Oates - H2O</h1>
-          <p class="text" id="recordText">
+          <h1 class="title lightModeText" >Hall and Oates - H2O</h1>
+          <p class="text lightModeText">
           "H2O" is the eleventh studio album by the American pop rock duo Hall & Oates, released in 1982. It is a vibrant and polished record that epitomizes the duo's signature blend of catchy pop hooks, soulful vocals, and infectious grooves. "H2O" marked a successful transition for Hall & Oates into the 1980s, showcasing their ability to adapt to changing musical trends while maintaining their distinctive sound.
 
 The album features a collection of memorable tracks, including the chart-topping hit singles "Maneater" and "One on One." These songs exemplify Hall & Oates' knack for crafting catchy, radio-friendly pop songs with their signature blend of smooth vocals and tight instrumentation.
@@ -235,13 +272,13 @@ With its infectious melodies, smooth harmonies, and radio-friendly sound, "H2O" 
           </p>
           <iframe style="border-radius:12px" src="https://open.spotify.com/embed/album/7ygXmT175bKbOpiPjNwXOB?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
           <div>
-              <button class="boton btn1" id="newRecord">Recommend NEW record</button>
+            <button type="button" class="boton btn1" id="goBackBtn3">Go Back</button>
           </div>
           `;
     }else{recommendedRecordSection.innerHTML = `    
     <div class="mx-auto col-10 col-md-8 col-lg-6 transpBg">
-        <h1 class="title" id="recordTitle">Michael Jackson - Dangerous</h1>
-        <p class="text" id="recordText">
+        <h1 class="title lightModeText" >Michael Jackson - Dangerous</h1>
+        <p class="text lightModeText">
         "Dangerous" is the eighth studio album by the iconic American singer, songwriter, and entertainer, Michael Jackson. Released in 1991, it represents a pivotal moment in his career, showcasing his unparalleled talent and musical innovation. "Dangerous" merges pop, R&B, rock, and new jack swing elements to create a dynamic and genre-defying sound.
 
 The album is characterized by its infectious melodies, polished production, and Jackson's charismatic vocal performances. It features a combination of uptempo dance tracks and introspective ballads, showcasing the range and versatility of Jackson's musical abilities.
@@ -256,11 +293,17 @@ With its groundbreaking production techniques, innovative music videos, and memo
         </p>
         <iframe style="border-radius:12px" src="https://open.spotify.com/embed/album/0oX4SealMgNXrvRDhqqOKg?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
         <div>
-            <button class="boton btn1" id="newRecord">Recommend NEW record</button>
+          <button type="button" class="boton btn1" id="goBackBtn3">Go Back</button>
         </div>
-        `;
-      }
+`;
+}
+});
+const goBackBtn3 = document.getElementById('goBackBtn3');
+  goBackBtn3.addEventListener('click', (event) => {
+    actions.classList.remove('disable');
+    recommendedRecordSection.classList.add('disable');
   });
+
 }
 
 
@@ -391,13 +434,12 @@ recommendRandom.addEventListener("click", () => {
 });
 
 
-//Función que muestra un artist y record random basada en la genre en userArr.
-
+//Función quue devuelve un record random.
 
 function getRandomRecord(){
-  musicArrToJson();
-  const userArr = JSON.parse(localStorage.getItem('userArr'));
-  const objMusicArr = JSON.parse(localStorage.getItem('objMusicArr')); 
+  musicArrToJson(); //Guarda objMusicArr en el JSON
+  const userArr = JSON.parse(localStorage.getItem('userArr')); //Llama a userArr
+  const objMusicArr = JSON.parse(localStorage.getItem('objMusicArr')); //LLama al array objMusicArr 
   const genreUser = userArr.map((user) => user.genre) //recorre userArr[] y nos devuelve un array nuevo = genreUser[] con un solo valor porque hay un solo user.  
   
   let finded = objMusicArr.filter((music) => { 
@@ -409,7 +451,7 @@ function getRandomRecord(){
   
   recommendedRandom.innerHTML = `    
       <div class="mx-auto col-10 col-md-8 col-lg-6 transpBg randomRecommended">
-          <h1 class="title" >${finded[random].artist} - ${finded[random].record}</h1>
+          <h1 class="title lightModeText" >${finded[random].artist} - ${finded[random].record}</h1>
               
           <div>
             ${finded[random].spotify}
@@ -426,7 +468,7 @@ function getRandomRecord(){
             recommendedRandom.classList.add('disable');
           });
 }
-
+//Función para guardar objMusicArr[] en el JSON. 
 function musicArrToJson(){
   localStorage.setItem('objMusicArr', JSON.stringify(objMusicArr));
 }
