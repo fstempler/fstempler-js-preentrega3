@@ -99,7 +99,7 @@ function createUser(user){
   userArr.push(user);
   userInput.classList.add('disable');
   localStorage.setItem('userArr', JSON.stringify(userArr));
-  actions.classList.remove('disable');
+  
   userActions();
 }
 
